@@ -563,7 +563,7 @@ export default function ChatPage() {
                       onClick={handleInstructionsClick}
                       className="bg-[#4FD1C5] text-white px-2 sm:px-4 py-2 rounded-md flex items-center space-x-1 sm:space-x-2 hover:bg-[#45B8AE] transition-colors"
                     >
-                      <FileText size={20} />
+                      <Settings size={20} />
                       <span className="hidden sm:inline">Instructions</span>
                     </button>
                     <button 
