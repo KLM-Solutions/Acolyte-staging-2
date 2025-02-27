@@ -1,6 +1,5 @@
 // app/api/tts/route.ts
 import { ElevenLabsClient } from 'elevenlabs';
-
 async function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
   const chunks: Buffer[] = [];
   for await (const chunk of stream) {
@@ -8,11 +7,9 @@ async function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
   }
   return Buffer.concat(chunks);
 }
-
 const elevenLabs = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY,
+  apiKey: process.env.ELEVENLABS_API_KEY
 });
-
 export async function POST(req: Request) {
   try {
     const { text } = await req.json();
@@ -23,12 +20,12 @@ export async function POST(req: Request) {
         model_id: "eleven_multilingual_v2",
       }
     );
-    
     const buffer = await streamToBuffer(audioStream);
-    
     return new Response(buffer, {
       headers: {
-        'Content-Type': 'audio/mpeg',
+        'Content-Type': 'audio/mp3',
+        'Accept-Ranges': 'bytes',
+        'Content-Length': buffer.length.toString(),
       },
     });
   } catch (error) {
